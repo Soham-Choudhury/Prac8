@@ -1,143 +1,192 @@
 #include "LinkedList.h"
-#include <iostream>
-#include <limits>
+#include<limits>
+#include<iostream>
+
 using namespace std;
 
-int LinkedList::size(){
-    Node* temp=new Node();
-    temp=head;
-    int size=1;
-    while (temp.next!=NULL){
-        size++;
-        temp=temp.next;
-    }
-    return size+1;
-};
+#define NULL __null
 
-void LinkedList::addFront(int newItem){
-    Node* newNode= new Node();
-    newNode.data->newItem;
-    newNode.next->head;
-    head= newNode;
-};
+Node np;
 
-void LinkedList::addEnd(int newItem){
-    Node* newNode= new Node();
-    newNode.data-> newItem;
-    newNode.next-> NULL;
-    Node temp = head; //making temp node that starts at head
-    while (temp.next!=NULL){
-        temp=temp.next;
-    }
-    temp.next=newNode;
-};
+LinkedList ::LinkedList()
+{
+    head = NULL;
+}
+LinkedList ::LinkedList(int arr[], int n)
+{
+    Node *head = NULL;
+    for (int i = 0; i < n; i++)
+    {
+        Node *temp = new Node;
+        Node *ptr;
+        temp->data = arr[i];
+        temp->next = NULL;
 
-int LinkedList::search(int item){
-    Node* temp= new Node;
-    temp = head; //making temp node that starts at head
-    int position=1;
-    while (temp.next!=NULL && temp.data!=item){
-        position++;
-        temp=temp.next;
-    }
-    if (temp.data==item){
-        return position
-    }
-    else if {
-        return 0;
-    }
-};
-
-void LinkedList::addAtPosition(int position, int newItem){
-    Node* newNode= new Node();
-    LinkedList listsize;
-    Node* temp = head;
-    Node* newtemp;
-    int size=listsize.size();
-    newNode.data= newItem;
-    if (size<position){
-        addEnd(newItem);
-    }
-    else if (position<1){
-        addFront(newItem);
-    }
-    else {
-        for (int i=1;i<position;i++){
-            if (i==position-1){
-                newtemp=temp.next;
-                temp.next=newNode;
-                newNode.next=newtemp;
-            }
-            temp=temp.next;
+        if (head == NULL)
+            head = temp;
+        else
+        {
+            ptr = head;
+            while (ptr->next != NULL)
+                ptr = ptr->next;
+            ptr->next = temp;
         }
     }
-    
-};
+}
 
-void LinkedList::deleteFront(){
-    Node* temp = head;
-    head=head.next;
-};
+void LinkedList::addFront(int newItem)
+{
+    Node *newNode = new Node;
+    newNode->data = newItem;
+    newNode->next = head;
+    head = newNode;
+}
+
+void LinkedList::addEnd(int newItem)
+{
+    if (head == NULL)
+    {
+        return;
+    }
+    Node *newNode = new Node;
+    newNode->data = newItem;
+    newNode->next = NULL;
+    while (head->next != NULL)
+        head = head->next;
+
+    head->next = newNode;
+}
+
+void LinkedList::addAtPosition(int position, int newItem) 
+{
+    Node *newNode = new Node();
+    newNode->data = newItem;
+    newNode->next = NULL;
+
+    if (position < 1)
+    {
+        return;
+    }
+    else if (position == 1)
+    {
+        newNode->next = head;
+        head = newNode;
+    }
+    else
+    {
+
+        Node *temp = head;
+        for (int i = 1; i < position - 1; i++)
+        {
+            if (temp != NULL)
+            {
+                temp = temp->next;
+            }
+        }
+
+        if (temp != NULL)
+        {
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+        else
+        {
+            return;
+        }
+    }
+}
+
+int LinkedList::search(int item)
+{
+	int index = 0;              
+	Node * temp = head;
+	while(temp!=NULL){
+		if(temp->data == item){ 
+            cout<< index +1;        
+			return index+1;               
+		}
+		temp = temp->next;
+		index++;
+	}   
+    cout<<0;
+	return 0; 
+}
+
+void LinkedList::deleteFront()
+{
+    if(head==NULL){
+      return;
+   }
+   Node*temp=head;
+   head= head->next;
+   delete temp;
+   return;
+}
+
+int LinkedList::getItem(int position)
+{
+	int index = 0;              
+	Node * temp = head;
+	while(temp!=NULL){
+		if(index+1==position){ 
+            cout<< temp->data<<" ";        
+			return temp->data;               
+		}
+		temp = temp->next;
+		index++;
+	}   
+    if(temp==NULL && position>index)
+    {
+        cout<<"std::numeric_limits <int>::max()"<<" ";
+        return numeric_limits<int>::max();
+    }
+    cout<<0;
+	return 0; 
+}
 
 void LinkedList::deleteEnd(){
-    Node* temp = head;
-    int position=1;
-    while (temp.next!=NULL){
-        temp=temp.next;
-        position ++;
-    }
-    temp=head;
-    for (int i=1; i<position; i++){
-        if (i==position-1){
-            temp.next==NULL;
-        }
-        temp=temp.next;
-    }
-};
+   Node*prev= NULL;
+   Node*temp= head;
+   while(temp->next!=NULL){
+      prev= temp;
+      temp=temp->next;
+   }
+   delete temp;
+   prev->next= NULL;
+   return;
+}
 
-void deletePosition(int position){
-    Node* temp = head;
-    Node* newtemp;
-    int tempposition=1;
+void LinkedList::deletePosition(int position) 
+{
+    if (head == NULL) {
+      return;
+   }
+   struct Node* temp = head;
+   if (position == 1) {
+      head = temp->next;
+      delete(temp);
+      return;
+   }
+   for (int i = 2; temp != NULL && i < position - 1; i++) {
+      temp = temp->next;
+   }
+   if (temp == NULL || temp->next == NULL) {
+      return;
+   }
+   struct Node *next = temp->next->next;
+   free(temp->next);
+   temp->next = next;
+}
 
-    for (int i=1; i=position; i++){ //(eg. if node 3 is to be deleted) take address of node 4 from the node 3 and store in another variable
-        if (i==position){
-            newtemp=temp.next;
-        }
-        temp=temp.next;
+void LinkedList::printItems()
+{
+    while (head != NULL)
+    {
+        cout << head->data<<" ";
+        head = head->next;
     }
-    for (int i=1; i<position; i++){ //(eg. if node 3 is to be deleted) iterate down to node 2 from head and add address of node 4 as next node
-        if (i==position-1){
-            temp.next=newtemp;
-        }
-        temp=temp.next;
-    }
+    cout << endl;
+}
 
-};
-
-int LinkedList::getItem(int position){
-    Node* temp=head;
-    LinkedList listsize;
-    int size=listsize.size();
-    for(int i=1;i=position;i++){
-        if (i==position){
-            cout<<temp.data<<" "<<endl;
-            return temp.data;
-        }
-        if (position>size){
-            cout<<"std::numeric_limits < int >::max() "<<endl;
-            return std::numeric_limits < int >::max();
-        }
-        temp=temp.next;
-    }
-};
-
-void LinkedList::printItems(){
-    Node* temp=head;
-    while (temp.next!=NULL){
-        cout<<temp.data<<endl;
-        temp=temp.next;
-    }
-    temp=temp.next;
-    cout<<temp.data<<endl;
-};
+LinkedList ::~LinkedList()
+{}
