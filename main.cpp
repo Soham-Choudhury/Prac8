@@ -84,11 +84,10 @@ int main()
         }
     }     
     int integers[size-3];
-    for (i=0;i<size-2;i++){
+    for (int i=0;i<size-2;i++){
         integers[i]=numbers[i];
     };
-    int n=numbers.size();
-
+    int n=size-3;
     LinkedList(integers,n);
     LinkedList ll;
     if(functioncode=="AF")
